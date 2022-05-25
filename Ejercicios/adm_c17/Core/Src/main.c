@@ -24,7 +24,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "asm_func.h"
-//#include "c_func.h"
+#include "c_func.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -48,15 +48,13 @@ ETH_DMADescTypeDef  DMARxDscrTab[ETH_RX_DESC_CNT]; /* Ethernet Rx DMA Descriptor
 ETH_DMADescTypeDef  DMATxDscrTab[ETH_TX_DESC_CNT]; /* Ethernet Tx DMA Descriptors */
 
 ETH_HandleTypeDef heth;
-
 UART_HandleTypeDef huart3;
 
 PCD_HandleTypeDef hpcd_USB_OTG_FS;
 
-//uint8_t myVector[10] = {0,1,2,3,4,5,6,7,8,9};
-
-uint8_t bufferTx[50];
-uint8_t myVector[10];
+static char bufferTx[50];
+uint32_t myVector[10];
+uint32_t myLongitud = sizeof(myVector)/sizeof(myVector[0]);
 
 /* USER CODE BEGIN PV */
 
@@ -68,13 +66,13 @@ static void MX_GPIO_Init(void);
 static void MX_ETH_Init(void);
 static void MX_USART3_UART_Init(void);
 static void MX_USB_OTG_FS_PCD_Init(void);
-void zeros (uint8_t  *vector, uint8_t longitud);
 /* USER CODE BEGIN PFP */
 
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
+void printVector(uint32_t * vector, uint32_t longitud);
 static void PrivilegiosSVC (void)
 {
     // Obtiene valor del registro de 32 bits del procesador llamado "control".
@@ -168,7 +166,9 @@ int main(void)
   const uint32_t Resultado = asm_sum (5, 3);
   /* USER CODE END 2 */
 
-  zeros(myVector, sizeof(myVector));
+  zeros(myVector, myLongitud);
+  printVector(myVector, myLongitud);
+
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
@@ -181,29 +181,17 @@ int main(void)
   /* USER CODE END 3 */
 }
 
-
-/**
-  *	@brief	Inicializa un vector con ceros
-  * @param	vector: puntero del vector a inicializar
-  * @param	longitud: cantidad de elementos del vector
-  * @retval	none
-  */
-
-void zeros (uint8_t *vector, uint8_t longitud){
-	sprintf(bufferTx, "%d", longitud);
-	HAL_UART_Transmit(&huart3, (uint8_t *)"\n\rSe inicializa el vector con ", 30, 50);
-	HAL_UART_Transmit(&huart3, bufferTx, sizeof(bufferTx), 50);
-	HAL_UART_Transmit(&huart3, (uint8_t *)" zeros.\n\r", 9, 50);
-	HAL_UART_Transmit(&huart3, (uint8_t *)"El vector es igual a: [", 23, 50);
-
-	for(uint8_t i=0; i<longitud; i++){
-		vector[i] = 0;
-
-		sprintf(bufferTx, "%d", vector[i]);
-		HAL_UART_Transmit(&huart3, bufferTx, sizeof(bufferTx), 50);
+void printVector(uint32_t * vector, uint32_t longitud){
+	HAL_UART_Transmit(&huart3, (uint8_t *)"Vector: [", 9, 50);
+	for(uint32_t i=0; i<longitud; i++){
+		sprintf(bufferTx, "%li", vector[i]);
+		HAL_UART_Transmit(&huart3, (uint8_t *)bufferTx, sizeof(bufferTx), 50);
+		if(i < longitud -1)
+			HAL_UART_Transmit(&huart3, (uint8_t *)",", 1, 50);
 	}
-	HAL_UART_Transmit(&huart3,(uint8_t *)"]\n\r*********************************\n\r",38,100);
+	HAL_UART_Transmit(&huart3, (uint8_t *)"] \n\r", 4, 50);
 }
+
 
 /**
   * @brief System Clock Configuration

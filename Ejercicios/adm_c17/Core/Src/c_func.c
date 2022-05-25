@@ -6,3 +6,11 @@
  */
 
 
+#include <stdio.h>
+#include "main.h"
+
+void zeros (uint32_t *vector, uint32_t longitud){
+	for(uint32_t i=0; i<longitud; i++){
+		vector[i] = 0;
+	}
+}

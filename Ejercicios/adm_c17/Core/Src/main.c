@@ -56,6 +56,10 @@ static char bufferTx[50];
 uint32_t myVector[10];
 uint32_t myLongitud = sizeof(myVector)/sizeof(myVector[0]);
 
+u_int32_t myVectorIn[5] = {5,3,1,2,8};
+u_int32_t myVectorOut[] = {};
+u_int32_t myLongitud2 = sizeof(myVectorIn)/sizeof(myVectorIn[0]);
+
 /* USER CODE BEGIN PV */
 
 /* USER CODE END PV */
@@ -168,6 +172,9 @@ int main(void)
 
   zeros(myVector, myLongitud);
   printVector(myVector, myLongitud);
+
+  productoEscalar32(myVectorIn, myVectorOut, myLongitud2, 8);
+  printVector(myVectorOut, myLongitud2);
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */

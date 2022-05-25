@@ -17,5 +17,14 @@
   */
 void zeros(uint32_t *vector, uint32_t longitud);
 
+/**
+  *	@brief	Multiplica un vector con un escalon
+  * @param	vectorIn: puntero del vector de entrada
+  * @param	vectorOut: puntero del vector de salida
+  * @param	longitud: cantidad de elementos del vector de entrada
+  * @param	escalar: escalon que multiplicará al vector de entrada
+  * @retval	none
+  */
+void productoEscalar32 (uint32_t * vectorIn, uint32_t * vectorOut, uint32_t longitud, uint32_t escalar);
 
 #endif /* INC_C_FUNC_H_ */

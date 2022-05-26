@@ -52,13 +52,16 @@ UART_HandleTypeDef huart3;
 
 PCD_HandleTypeDef hpcd_USB_OTG_FS;
 
-static char bufferTx[50];
 uint32_t myVector[10];
 uint32_t myLongitud = sizeof(myVector)/sizeof(myVector[0]);
 
-u_int32_t myVectorIn[5] = {5,3,1,2,8};
-u_int32_t myVectorOut[] = {};
-u_int32_t myLongitud2 = sizeof(myVectorIn)/sizeof(myVectorIn[0]);
+uint32_t myVectorIn_32[5] = {223,211,2341,211,133};
+uint32_t myVectorOut_32[5];
+uint32_t myLongitud_32 = sizeof(myVectorIn_32)/sizeof(uint32_t);
+
+uint16_t myVectorIn_16[5] = {5,31,50,21,146};
+uint16_t myVectorOut_16[5];
+uint16_t myLongitud_16 = sizeof(myVectorIn_16)/sizeof(uint16_t);
 
 /* USER CODE BEGIN PV */
 
@@ -76,7 +79,8 @@ static void MX_USB_OTG_FS_PCD_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-void printVector(uint32_t * vector, uint32_t longitud);
+void printVector_32(uint32_t * vector, uint32_t longitud);
+void printVector_16(uint16_t * vector, uint16_t longitud);
 static void PrivilegiosSVC (void)
 {
     // Obtiene valor del registro de 32 bits del procesador llamado "control".
@@ -170,11 +174,23 @@ int main(void)
   const uint32_t Resultado = asm_sum (5, 3);
   /* USER CODE END 2 */
 
-  zeros(myVector, myLongitud);
-  printVector(myVector, myLongitud);
+  //zeros(myVector, myLongitud);
+  //printVector(myVector, myLongitud);
 
-  productoEscalar32(myVectorIn, myVectorOut, myLongitud2, 8);
-  printVector(myVectorOut, myLongitud2);
+  zeros(myVectorOut_16, myLongitud_16);
+  productoEscalar12(myVectorIn_16, myVectorOut_16, myLongitud_16, 65535);
+  HAL_UART_Transmit(&huart3, (uint8_t *)"Vector de 12bits: ", 18, 50);
+  printVector_16(myVectorOut_16, myLongitud_16);
+
+  zeros(myVectorOut_16, myLongitud_16);
+  productoEscalar16(myVectorIn_16, myVectorOut_16, myLongitud_16, 5);
+  HAL_UART_Transmit(&huart3, (uint8_t *)"Vector de 16bits: ", 18, 50);
+  printVector_16(myVectorOut_16, myLongitud_16);
+
+  zeros(myVectorOut_32, myLongitud_32);
+  productoEscalar32(myVectorIn_32, myVectorOut_32, myLongitud_32, 2);
+  HAL_UART_Transmit(&huart3, (uint8_t *)"Vector de 32bits: ", 18, 50);
+  printVector_32(myVectorOut_32, myLongitud_32);
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
@@ -188,11 +204,27 @@ int main(void)
   /* USER CODE END 3 */
 }
 
-void printVector(uint32_t * vector, uint32_t longitud){
-	HAL_UART_Transmit(&huart3, (uint8_t *)"Vector: [", 9, 50);
+void printVector_32(uint32_t * vector, uint32_t longitud){
+
+	HAL_UART_Transmit(&huart3, (uint8_t *)"[", 1, 50);
 	for(uint32_t i=0; i<longitud; i++){
+		uint32_t bufferTx[12]={};
 		sprintf(bufferTx, "%li", vector[i]);
-		HAL_UART_Transmit(&huart3, (uint8_t *)bufferTx, sizeof(bufferTx), 50);
+		HAL_UART_Transmit(&huart3, bufferTx, sizeof(bufferTx)/sizeof(uint32_t), 50);
+		if(i < longitud -1)
+			HAL_UART_Transmit(&huart3, (uint8_t *)",", 1, 50);
+	}
+	HAL_UART_Transmit(&huart3, (uint8_t *)"] \n\r", 4, 50);
+}
+
+
+void printVector_16(uint16_t * vector, uint16_t longitud){
+
+	HAL_UART_Transmit(&huart3, (uint8_t *)"[", 1, 50);
+	for(uint16_t i=0; i<longitud; i++){
+		uint16_t bufferTx[10]={};
+		sprintf(bufferTx, "%i", vector[i]);
+		HAL_UART_Transmit(&huart3, bufferTx, sizeof(bufferTx)/sizeof(uint16_t), 50);
 		if(i < longitud -1)
 			HAL_UART_Transmit(&huart3, (uint8_t *)",", 1, 50);
 	}

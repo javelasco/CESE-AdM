@@ -59,7 +59,7 @@ uint32_t myVectorIn_32[5] = {223,211,2341,211,133};
 uint32_t myVectorOut_32[5];
 uint32_t myLongitud_32 = sizeof(myVectorIn_32)/sizeof(uint32_t);
 
-uint16_t myVectorIn_16[5] = {5,31,50,21,146};
+uint16_t myVectorIn_16[5] = {820,31,800,21,1436};
 uint16_t myVectorOut_16[5];
 uint16_t myLongitud_16 = sizeof(myVectorIn_16)/sizeof(uint16_t);
 
@@ -177,20 +177,31 @@ int main(void)
   //zeros(myVector, myLongitud);
   //printVector(myVector, myLongitud);
 
-  zeros(myVectorOut_16, myLongitud_16);
-  productoEscalar12(myVectorIn_16, myVectorOut_16, myLongitud_16, 65535);
-  HAL_UART_Transmit(&huart3, (uint8_t *)"Vector de 12bits: ", 18, 50);
-  printVector_16(myVectorOut_16, myLongitud_16);
-
-  zeros(myVectorOut_16, myLongitud_16);
-  productoEscalar16(myVectorIn_16, myVectorOut_16, myLongitud_16, 5);
-  HAL_UART_Transmit(&huart3, (uint8_t *)"Vector de 16bits: ", 18, 50);
-  printVector_16(myVectorOut_16, myLongitud_16);
-
   zeros(myVectorOut_32, myLongitud_32);
   productoEscalar32(myVectorIn_32, myVectorOut_32, myLongitud_32, 2);
   HAL_UART_Transmit(&huart3, (uint8_t *)"Vector de 32bits: ", 18, 50);
   printVector_32(myVectorOut_32, myLongitud_32);
+
+  zeros(myVectorOut_16, myLongitud_16);
+  productoEscalar16(myVectorIn_16, myVectorOut_16, myLongitud_16, 3);
+  HAL_UART_Transmit(&huart3, (uint8_t *)"Vector de 16bits: ", 18, 50);
+  printVector_16(myVectorOut_16, myLongitud_16);
+
+  zeros(myVectorOut_16, myLongitud_16);
+  productoEscalar12(myVectorIn_16, myVectorOut_16, myLongitud_16, 5);
+  HAL_UART_Transmit(&huart3, (uint8_t *)"Vector de 12bits: ", 18, 50);
+  printVector_16(myVectorOut_16, myLongitud_16);
+
+
+  asm_zeros(myVectorOut_32, myLongitud_32);
+  asm_productoEscalar32b(myVectorIn_32, myVectorOut_32, myLongitud_32, 2);
+
+  asm_zeros(myVectorOut_16, myLongitud_16);
+  asm_productoEscalar16b(myVectorIn_16, myVectorOut_16, myLongitud_16, 3);
+
+  asm_zeros(myVectorOut_16, myLongitud_16);
+  asm_productoEscalar12b(myVectorIn_16, myVectorOut_16, myLongitud_16, 5);
+
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */

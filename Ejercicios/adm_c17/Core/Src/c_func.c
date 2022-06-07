@@ -70,3 +70,67 @@ void productoEscalar12 (uint16_t * vectorIn, uint16_t * vectorOut, uint16_t long
 		}
 	}
 }
+
+void filtroVentana10(uint16_t * vectorIn, uint16_t * vectorOut, uint16_t longitudVectorIn, uint16_t ventana){
+	for(uint16_t i=0; i < longitudVectorIn; i++){
+		uint16_t a=0, b=i;
+		while(a<ventana){
+			if(b+1 > longitudVectorIn){
+				b=0;
+			}
+
+			vectorOut[i] = vectorOut[i] + vectorIn[b];
+			a++;
+			b++;
+		}
+		vectorOut[i] = vectorOut[i]/ventana;
+	}
+}
+
+void pack32to16(int32_t * vectorIn, int16_t * vectorOut, uint32_t longitudVectorIn){
+	for(uint32_t i=0; i<longitudVectorIn; i++){
+		vectorOut[i] = (vectorIn[i] & 0xFFFF0000)>>16;
+	}
+}
+
+uint32_t max(int32_t * vectorIn, uint32_t longitudVectorIn){
+	uint32_t temporal = 0;
+	for(uint32_t i=0; i<longitudVectorIn; i++){
+		if(i+1<longitudVectorIn){
+			if(vectorIn[temporal] < vectorIn[i+1]){
+				temporal = i+1;
+			}
+		}
+	}
+	return temporal;
+}
+
+void downsampleM(int32_t * vectorIn, int32_t * vectorOut, uint32_t longitudVectorIn, uint32_t N){
+	uint32_t n=1;
+	uint32_t j=0;
+
+	for(uint32_t i=0; i<longitudVectorIn; i++){
+		if(n < N){
+			vectorOut[j] = vectorIn[i];
+			j++;
+			n++;
+		}
+		else{
+			n=1;
+		}
+	}
+}
+
+void invertir(uint16_t * vector, uint16_t longitud){
+	uint16_t j=0;
+	uint16_t temporal[longitud];
+
+	for(int16_t i=longitud-1; i>=0; i--){
+		temporal[j] = vector[i];
+		j++;
+	}
+
+	for(uint16_t i=0; i<longitud; i++){
+		vector[i] = temporal[i];
+	}
+}

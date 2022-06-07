@@ -80,10 +80,10 @@
 .thumb_func
     asm_productoEscalar32b:
  	mov r11, r2						@Guardo la longitud en el registro r11
-    .asm_for_loop_32b:					@Bucle 'for' que recorre cada elemento del vector
+    .asm_for_loop_32b:				@Bucle 'for' que recorre cada elemento del vector
     	cmp r11, 0					@Si la longitud es 0, quiere decir que ya se recorrio todos los elementos
     	beq .fin					@y debo terminar el programa, salto condicional a fin.
-    .asm_while_loop_32b:				@Bucle 'while' que se usa para la suma iterativa
+    .asm_while_loop_32b:			@Bucle 'while' que se usa para la suma iterativa
     	mov r10, r3					@Guardo el valor del escalar en el registro r10
     .asm_suma_loop_32b:
     	cmp r10, 0					@Comparo si el valor del escalar es 0, cada iteración se le resta 1
@@ -126,7 +126,7 @@
     .asm_for_loop_16b:				@Bucle 'for' que recorre cada elemento del vector
     	cmp r11, 0					@Si la longitud es 0, quiere decir que ya se recorrio todos los elementos
     	beq .fin					@y debo terminar el programa, salto condicional a fin.
-    .asm_while_loop_16b:				@Bucle 'while' que se usa para la suma iterativa
+    .asm_while_loop_16b:			@Bucle 'while' que se usa para la suma iterativa
     	mov r10, r3					@Guardo el valor del escalar en el registro r10
     .asm_suma_loop_16b:
     	cmp r10, 0					@Comparo si el valor del escalar es 0, cada iteración se le resta 1
@@ -190,7 +190,7 @@
     	ldrh r5, [r0], 2			@Leo y paso al siguiente elemento del vectorIn[x]
     	ldrh r6, [r1], 2			@Leo y paso al siguiente elemento del vectorOut[x]
     	subs r11, 1					@Resto 1 al valor de r11 (longitud) y
-    	b .asm_for_loop_12b				@Hago un salto incondicional al loop for para continuar con la función.
+    	b .asm_for_loop_12b			@Hago un salto incondicional al loop for para continuar con la función.
     .fin_12b:
     	bx lr						@Finalizo la función.
 

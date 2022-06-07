@@ -55,11 +55,11 @@ PCD_HandleTypeDef hpcd_USB_OTG_FS;
 uint32_t myVector[10];
 uint32_t myLongitud = sizeof(myVector)/sizeof(myVector[0]);
 
-uint32_t myVectorIn_32[5] = {223,211,2341,211,133};
-uint32_t myVectorOut_32[5];
-uint32_t myLongitud_32 = sizeof(myVectorIn_32)/sizeof(uint32_t);
+int32_t myVectorIn_32[10] = {1, 3, 12, 25, 4, 55, 11, 6, 9, 19};
+uint32_t myVectorOut_32[10];
+uint32_t myLongitud_32 = sizeof(myVectorIn_32)/sizeof(int32_t);
 
-uint16_t myVectorIn_16[5] = {820,31,800,21,1436};
+uint16_t myVectorIn_16[5] = {5,6,8,10,2};
 uint16_t myVectorOut_16[5];
 uint16_t myLongitud_16 = sizeof(myVectorIn_16)/sizeof(uint16_t);
 
@@ -177,7 +177,7 @@ int main(void)
   //zeros(myVector, myLongitud);
   //printVector(myVector, myLongitud);
 
-  zeros(myVectorOut_32, myLongitud_32);
+  /*zeros(myVectorOut_32, myLongitud_32);
   productoEscalar32(myVectorIn_32, myVectorOut_32, myLongitud_32, 2);
   HAL_UART_Transmit(&huart3, (uint8_t *)"Vector de 32bits: ", 18, 50);
   printVector_32(myVectorOut_32, myLongitud_32);
@@ -200,8 +200,26 @@ int main(void)
   asm_productoEscalar16b(myVectorIn_16, myVectorOut_16, myLongitud_16, 3);
 
   asm_zeros(myVectorOut_16, myLongitud_16);
-  asm_productoEscalar12b(myVectorIn_16, myVectorOut_16, myLongitud_16, 5);
+  asm_productoEscalar12b(myVectorIn_16, myVectorOut_16, myLongitud_16, 5);*/
 
+  //asm_zeros(myVectorOut_16, myLongitud_16);
+  //filtroVentana10(myVectorIn_16, myVectorOut_16, myLongitud_16, 5);
+  //printVector_16(myVectorOut_16, myLongitud_16);
+
+  //asm_zeros(myVectorOut_16, myLongitud_16);
+  //pack32to16(myVectorIn_32, myVectorOut_16, myLongitud_32);
+  //printVector_16(myVectorOut_16, myLongitud_16);
+
+  //uint32_t maximo = max(myVectorIn_32, myLongitud_32);
+
+  /*uint16_t n = 2;
+  uint32_t a = (myLongitud_32/n)*(n-1) + myLongitud_32%n;
+  int32_t myVectorOut2[a];
+  uint32_t myLongitud2 = sizeof(myVectorOut2)/sizeof(uint32_t);
+  downsampleM(myVectorIn_32, myVectorOut2, myLongitud_32, n);*/
+
+  invertir(myVectorIn_16, myLongitud_16);
+  printVector_16(myVectorIn_16, myLongitud_16);
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */

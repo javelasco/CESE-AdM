@@ -55,12 +55,12 @@ PCD_HandleTypeDef hpcd_USB_OTG_FS;
 uint32_t myVector[10];
 uint32_t myLongitud = sizeof(myVector)/sizeof(myVector[0]);
 
-int32_t myVectorIn_32[10] = {1, 3, 12, 25, 4, 55, 11, 6, 9, 19};
-uint32_t myVectorOut_32[10];
+int32_t myVectorIn_32[6] = {1, 10, 5, 12, 100, 20};
+uint32_t myVectorOut_32[6];
 uint32_t myLongitud_32 = sizeof(myVectorIn_32)/sizeof(int32_t);
 
-uint16_t myVectorIn_16[5] = {5,6,8,10,2};
-uint16_t myVectorOut_16[5];
+uint16_t myVectorIn_16[2] = {1, 3};
+int16_t myVectorOut_16[2];
 uint16_t myLongitud_16 = sizeof(myVectorIn_16)/sizeof(uint16_t);
 
 /* USER CODE BEGIN PV */
@@ -203,6 +203,7 @@ int main(void)
   asm_productoEscalar12b(myVectorIn_16, myVectorOut_16, myLongitud_16, 5);*/
 
   //asm_zeros(myVectorOut_16, myLongitud_16);
+  //asm_filtroVentana10(myVectorIn_16, myVectorOut_16, myLongitud_16, 5);
   //filtroVentana10(myVectorIn_16, myVectorOut_16, myLongitud_16, 5);
   //printVector_16(myVectorOut_16, myLongitud_16);
 
@@ -218,8 +219,14 @@ int main(void)
   uint32_t myLongitud2 = sizeof(myVectorOut2)/sizeof(uint32_t);
   downsampleM(myVectorIn_32, myVectorOut2, myLongitud_32, n);*/
 
-  invertir(myVectorIn_16, myLongitud_16);
-  printVector_16(myVectorIn_16, myLongitud_16);
+  //invertir(myVectorIn_16, myLongitud_16);
+  //printVector_16(myVectorIn_16, myLongitud_16);
+
+  //asm_zeros(myVectorOut_16, myLongitud_16);
+  //asm_pack32to16(myVectorIn_32, myVectorOut_16, myLongitud_32);
+  //printVector_16(myVectorOut_16, myLongitud_16);
+
+  int32_t aaa = asm_max(myVectorIn_32, myLongitud_32);
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */

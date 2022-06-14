@@ -52,16 +52,6 @@ UART_HandleTypeDef huart3;
 
 PCD_HandleTypeDef hpcd_USB_OTG_FS;
 
-uint32_t myVector[10];
-uint32_t myLongitud = sizeof(myVector)/sizeof(myVector[0]);
-
-int32_t myVectorIn_32[6] = {1, 10, 5, 12, 100, 20};
-uint32_t myVectorOut_32[6];
-uint32_t myLongitud_32 = sizeof(myVectorIn_32)/sizeof(int32_t);
-
-uint16_t myVectorIn_16[2] = {1, 3};
-int16_t myVectorOut_16[2];
-uint16_t myLongitud_16 = sizeof(myVectorIn_16)/sizeof(uint16_t);
 
 /* USER CODE BEGIN PV */
 
@@ -174,59 +164,130 @@ int main(void)
   const uint32_t Resultado = asm_sum (5, 3);
   /* USER CODE END 2 */
 
-  //zeros(myVector, myLongitud);
-  //printVector(myVector, myLongitud);
+ /** Ejercicio 1:
+   * Realizar una función que inicialice un vector con ceros. La función debe tener el siguiente prototipo
+   */
+  /*uint32_t myVector_32[10] = {};
+  uint32_t myLongitud_32 = sizeof(myVector_32)/sizeof(int32_t);
+  uint32_t myVector_16[10] = {};
+  uint32_t myLongitud_16 = sizeof(myVector_16)/sizeof(int32_t);
+  zeros_32(myVector_32, myLongitud_32);
+  zeros_16(myVector_16, myLongitud_16);
+  printVector_32(myVector_32, myLongitud_32);
+  printVector_16(myVector_16, myLongitud_16);*/
 
-  /*zeros(myVectorOut_32, myLongitud_32);
-  productoEscalar32(myVectorIn_32, myVectorOut_32, myLongitud_32, 2);
-  HAL_UART_Transmit(&huart3, (uint8_t *)"Vector de 32bits: ", 18, 50);
-  printVector_32(myVectorOut_32, myLongitud_32);
+ /** Ejercicio 2:
+   * Realizar una función que realice el producto de un vector y un escalar (por ejemplo, podría servir para cambiar el nivel de amplitud de una señal).
+   */
+  /*uint32_t myVectorIn_32[5] = {1, 34, 5, 34, 12};
+  uint32_t myLongitudIn_32 = sizeof(myVectorIn_32)/sizeof(uint32_t);
+  uint32_t myVectorOut_32[5];
+  uint32_t myLongitudOut_32 = sizeof(myVectorOut_32)/sizeof(uint32_t);
+  zeros_32(myVectorOut_32, myLongitudOut_32);
+  asm_productoEscalar32b (myVectorIn_32, myVectorOut_32, myLongitudIn_32, 2);
+  //productoEscalar32 (myVectorIn_32, myVectorOut_32, myLongitudIn_32, 2);
+  HAL_UART_Transmit (&huart3, (uint8_t *)"Vector de 32bits: ", 18, 50);
+  printVector_32 (myVectorOut_32, myLongitudOut_32);*/
 
-  zeros(myVectorOut_16, myLongitud_16);
-  productoEscalar16(myVectorIn_16, myVectorOut_16, myLongitud_16, 3);
+ /** Ejercicio 3:
+   * Adapte la función del ejercicio 2 para realizar operaciones sobre vectores de 16 bits:
+   */
+  /*uint16_t myVectorIn_16[5] = {1, 34, 5, 34, 12};
+  uint16_t myLongitudIn_16 = sizeof(myVectorIn_16)/sizeof(uint16_t);
+  uint16_t myVectorOut_16[5];
+  uint16_t myLongitudOut_16 = sizeof(myVectorOut_16)/sizeof(uint16_t);
+  zeros_16(myVectorOut_16, myLongitudOut_16);
+  asm_productoEscalar16b(myVectorIn_16, myVectorOut_16, myLongitudIn_16, 3);
+  //productoEscalar16 (myVectorIn_16, myVectorOut_16, myLongitudIn_16, 3);
   HAL_UART_Transmit(&huart3, (uint8_t *)"Vector de 16bits: ", 18, 50);
-  printVector_16(myVectorOut_16, myLongitud_16);
+  printVector_16(myVectorOut_16, myLongitudOut_16);*/
 
-  zeros(myVectorOut_16, myLongitud_16);
-  productoEscalar12(myVectorIn_16, myVectorOut_16, myLongitud_16, 5);
+ /** Ejercicio 4:
+   * Adapte la función del ejercicio 3 para saturar el resultado del producto a 12 bits:
+   */
+  /*uint16_t myVectorIn_16[5] = {1, 34, 5, 34, 12};
+  uint16_t myLongitudIn_16 = sizeof(myVectorIn_16)/sizeof(uint16_t);
+  uint16_t myVectorOut_16[5];
+  uint16_t myLongitudOut_16 = sizeof(myVectorOut_16)/sizeof(uint16_t);
+  zeros_16(myVectorOut_16, myLongitudOut_16);
+  asm_productoEscalar12b (myVectorIn_16, myVectorOut_16, myLongitudIn_16, 5);
+  //productoEscalar12 (myVectorIn_16, myVectorOut_16, myLongitudIn_16, 5);
   HAL_UART_Transmit(&huart3, (uint8_t *)"Vector de 12bits: ", 18, 50);
-  printVector_16(myVectorOut_16, myLongitud_16);
+  printVector_16(myVectorOut_16, myLongitudOut_16);*/
+
+ /** Ejercicio 5:
+   * Realice una función que implemente un filtro de ventana móvil de 10 valores sobre un vector de muestras.
+   */
+  /*uint16_t myVectorIn_16[15] = {1, 34, 5, 34, 12, 44, 66, 33, 22, 11, 99, 77, 341, 557, 112};
+  uint16_t myLongitudIn_16 = sizeof(myVectorIn_16)/sizeof(uint16_t);
+  uint16_t myVectorOut_16[15];
+  uint16_t myLongitudOut_16 = sizeof(myVectorOut_16)/sizeof(uint16_t);
+  asm_zeros_16(myVectorOut_16, myLongitudOut_16);
+  asm_filtroVentana10(myVectorIn_16, myVectorOut_16, myLongitudOut_16);
+  //filtroVentana10(myVectorIn_16, myVectorOut_16, myLongitudIn_16);
+  printVector_16(myVectorOut_16, myLongitudOut_16);*/
 
 
-  asm_zeros(myVectorOut_32, myLongitud_32);
-  asm_productoEscalar32b(myVectorIn_32, myVectorOut_32, myLongitud_32, 2);
+ /** Ejercicio 6:
+   * Realizar una función que reciba un vector de números signados de 32 bits y los “empaquete” en otro vector de 16 bits.
+   * La función deberá adecuar los valores de entrada a la nueva precisión.
+   */
+  /*int32_t myVectorIn_32[10] = {4291821568, 4291821468, 4191821568, 4291821518, 4293221568, 4291822168, 4296821568, 4291821563, 4391821568, 4291851568};
+  uint32_t myLongitud_32 = sizeof(myVectorIn_32)/sizeof(int32_t);
+  int16_t myVectorOut_16[10];
+  uint16_t myLongitud_16 = sizeof(myVectorOut_16)/sizeof(uint16_t);
+  asm_zeros_16 (myVectorOut_16, myLongitud_16);
+  asm_pack32to16 (myVectorIn_32, myVectorOut_16, myLongitud_32);
+  //pack32to16 (myVectorIn_32, myVectorOut_16, myLongitud_32);
+  printVector_16 (myVectorOut_16, myLongitud_16);*/
 
-  asm_zeros(myVectorOut_16, myLongitud_16);
-  asm_productoEscalar16b(myVectorIn_16, myVectorOut_16, myLongitud_16, 3);
 
-  asm_zeros(myVectorOut_16, myLongitud_16);
-  asm_productoEscalar12b(myVectorIn_16, myVectorOut_16, myLongitud_16, 5);*/
+ /** Ejercicio 7:
+   * Realizar una función que reciba un vector de números signados de 32 bits y devuelva la posición del máximo del vector.
+   */
+  /*int32_t myVectorIn_32[11] = {10, 2, 6, 8, 200, 500, 43, 50, 33, 52, 312};
+  uint32_t myLongitud_32 = sizeof(myVectorIn_32)/sizeof(int32_t);
+  uint32_t value = asm_max(myVectorIn_32, myLongitud_32);
+  //uint32_t value = max(myVectorIn_32, myLongitud_32);
+  HAL_UART_Transmit(&huart3, (uint8_t *)"El indice con el valor maximo es: ", 34, 50);
+  uint32_t bufferTx[10]={};
+  sprintf(bufferTx, "%i", value);
+  HAL_UART_Transmit(&huart3, bufferTx, sizeof(bufferTx)/sizeof(uint32_t), 50);
+  HAL_UART_Transmit(&huart3, (uint8_t *)"\n\r", 2, 50);*/
 
-  //asm_zeros(myVectorOut_16, myLongitud_16);
-  //asm_filtroVentana10(myVectorIn_16, myVectorOut_16, myLongitud_16, 5);
-  //filtroVentana10(myVectorIn_16, myVectorOut_16, myLongitud_16, 5);
-  //printVector_16(myVectorOut_16, myLongitud_16);
-
-  //asm_zeros(myVectorOut_16, myLongitud_16);
-  //pack32to16(myVectorIn_32, myVectorOut_16, myLongitud_32);
-  //printVector_16(myVectorOut_16, myLongitud_16);
-
-  //uint32_t maximo = max(myVectorIn_32, myLongitud_32);
-
-  /*uint16_t n = 2;
+  /** Ejercicio 8:
+    * Realizar una función que reciba un vector de muestras signadas de 32 bits y lo decime descartando una cada N muestras.
+    */
+  /*int32_t myVectorIn_32[10] = {10, 20, 30, 40, 50, 60, 70, 80, 90, 100};
+  uint32_t myLongitud_32 = sizeof(myVectorIn_32)/sizeof(int32_t);
+  uint16_t n = 3;
   uint32_t a = (myLongitud_32/n)*(n-1) + myLongitud_32%n;
   int32_t myVectorOut2[a];
   uint32_t myLongitud2 = sizeof(myVectorOut2)/sizeof(uint32_t);
-  downsampleM(myVectorIn_32, myVectorOut2, myLongitud_32, n);*/
+  asm_downsampleM(myVectorIn_32, myVectorOut2, myLongitud_32, n);
+  //downsampleM(myVectorIn_32, myVectorOut2, myLongitud_32, n);
+  printVector_32(myVectorOut2, myLongitud2);*/
 
+
+ /** Ejercicio 9:
+   * Realizar una función que reciba un vector de muestras no signadas de 16 bits e invierta su orden.
+   */
+  /*uint16_t myVectorIn_16[6] = {1, 0, 10, 5, 34, 6};
+  uint16_t myLongitud_16 = sizeof(myVectorIn_16)/sizeof(uint16_t);
+  asm_invertir(myVectorIn_16, myLongitud_16);
   //invertir(myVectorIn_16, myLongitud_16);
-  //printVector_16(myVectorIn_16, myLongitud_16);
+  printVector_16(myVectorIn_16, myLongitud_16);*/
 
-  //asm_zeros(myVectorOut_16, myLongitud_16);
-  //asm_pack32to16(myVectorIn_32, myVectorOut_16, myLongitud_32);
-  //printVector_16(myVectorOut_16, myLongitud_16);
-
-  int32_t aaa = asm_max(myVectorIn_32, myLongitud_32);
+ /** Ejercicio 11:
+   * Realizar una función que calcule la correlación entre dos vectores. Luego optimice utilizando instrucciones SIMD.
+   */
+  int16_t myVectorX[6] = {1, 0, 10, 5, 34, 6};
+  int16_t myVectorY[6] = {14, 12, 1, 5, 21, 67};
+  int32_t myVectorCorr[6];
+  uint32_t myLongitud_32 = sizeof(myVectorCorr)/sizeof(int32_t);
+  asm_zeros_32 (myVectorCorr, myLongitud_32);
+  //asm_corr (myVectorIn_16, myLongitud_16);
+  corr (myVectorX, myVectorY, myVectorCorr, myLongitud_32);
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */

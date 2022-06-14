@@ -15,7 +15,9 @@
   * @param	longitud: cantidad de elementos del vector
   * @retval	none
   */
-void zeros(uint32_t *vector, uint32_t longitud);
+void zeros_32 (uint32_t *vector, uint32_t longitud);
+void zeros_16 (uint16_t *vector, uint16_t longitud);
+
 
 /**
   *	@brief	Multiplica un vector de 32 bits con un escalon de 32 bits
@@ -54,7 +56,7 @@ void productoEscalar12 (uint16_t * vectorIn, uint16_t * vectorOut, uint16_t long
   * @param	longitudVectorIn: cantidad de elementos del vector de entrada
   * @retval	none
   */
-void filtroVentana10(uint16_t * vectorIn, uint16_t * vectorOut, uint16_t longitudVectorIn, uint16_t ventana);
+void filtroVentana10(uint16_t * vectorIn, uint16_t * vectorOut, uint16_t longitudVectorIn);
 
 /**
   *	@brief	Realizar una función que reciba un vector de números signados de 32 bits y los “empaquete” en otro vector de 16 bits.
@@ -83,7 +85,7 @@ uint32_t max (int32_t * vectorIn, uint32_t longitudVectorIn);
   * @param	longitudVectorIn: cantidad de elementos.
   * @retval	none
   */
-void downsampleM(int32_t * vectorIn, int32_t * vectorOut, uint32_t longitudVectorIn, uint32_t N);
+void downsampleM (int32_t * vectorIn, int32_t * vectorOut, uint32_t longitudVectorIn, uint32_t N);
 
 /**
   *	@brief	Realizar una función que reciba un vector de números signados de 32 bits y los “empaquete” en otro vector de 16 bits.
@@ -92,6 +94,15 @@ void downsampleM(int32_t * vectorIn, int32_t * vectorOut, uint32_t longitudVecto
   * @param	longitud: cantidad de elementos.
   * @retval	none
   */
-void invertir(uint16_t * vector, uint16_t longitud);
+void invertir (uint16_t * vector, uint16_t longitud);
+
+/**
+  *	@brief
+  *
+  * @param
+  * @param
+  * @retval
+  */
+void correla (int16_t * vectorX, int16_t * vectorY, int32_t * vectorCorr, uint32_t longitud);
 
 #endif /* INC_C_FUNC_H_ */
